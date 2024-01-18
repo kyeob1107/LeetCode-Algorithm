@@ -4,18 +4,18 @@ WITH approved AS(
         DATE_FORMAT(t_s.trans_date,'%Y-%m') month,
         t_s.trans_date,
         t_s.country , 
-        COUNT(t_s.id) approved_count,
-        SUM(t_s.amount) approved_total_amount
+        count(t_s.id) approved_count,
+        sum(t_s.amount) approved_total_amount
     FROM Transactions t_s
     WHERE t_s.state='approved'
     GROUP BY DATE_FORMAT(t_s.trans_date,'%Y-%m'),t_s.country
 )
 SELECT DATE_FORMAT(t.trans_date,'%Y-%m') month,
         t.country , 
-        COUNT(t.id) trans_count,
+        count(t.id) trans_count,
         CASE WHEN MAX(a.approved_count) IS NULL THEN 0
         ELSE MAX(a.approved_count) END approved_count,
-        SUM(t.amount) trans_total_amount,
+        sum(t.amount) trans_total_amount,
         CASE WHEN MAX(a.approved_total_amount) IS NULL THEN 0
         ELSE MAX(a.approved_total_amount) END approved_total_amount
 FROM Transactions t
