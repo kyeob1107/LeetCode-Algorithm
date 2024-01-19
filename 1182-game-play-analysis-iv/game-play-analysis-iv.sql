@@ -11,4 +11,4 @@ SELECT ROUND(COUNT(DISTINCT a.player_id)/
             ,2) fraction
 FROM Activity a
 INNER JOIN first f ON a.player_id = f.player_id
-AND DATE_ADD(f.first_date, INTERVAL 1 DAY) = a.event_date
+AND DATE_ADD(f.first_date, INTERVAL 1 DAY) = a.event_date;
