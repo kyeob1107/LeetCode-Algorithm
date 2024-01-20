@@ -1,5 +1,9 @@
 # Write your MySQL query statement below
-SELECT MAX(m.num) num
-FROM MyNumbers m
-WHERE (SELECT COUNT(m_s.num) FROM MyNumbers m_s 
-        WHERE m.num = m_s.num) = 1
+WITH single AS (
+    SELECT m_s.num
+    FROM MyNumbers m_s
+    GROUP BY m_s.num
+    HAVING COUNT(m_s.num) = 1
+)
+SELECT MAX(s.num) num
+FROM single s
