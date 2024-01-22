@@ -1,10 +1,10 @@
 # Write your MySQL query statement below
-SELECT person_name 
-FROM queue AS q
+SELECT q.person_name
+FROM Queue q
 WHERE 1000 >= (
-    SELECT SUM(weight) 
-    FROM queue 
-    WHERE q.turn >= turn
+    SELECT SUM(q_s.weight) 
+    FROM Queue q_s 
+    WHERE q_s.turn<=q.turn
 )
-ORDER BY turn DESC 
+ORDER BY q.turn DESC
 LIMIT 1;
