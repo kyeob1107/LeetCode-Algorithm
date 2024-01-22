@@ -5,11 +5,13 @@ WITH latest_update AS(
         p2.change_date
     FROM Products p2
     WHERE p2.change_date <= '2019-08-16'
-        AND (p2.product_id, p2.change_date) IN (
-                SELECT p_s.product_id, MAX(p_s.change_date) latest_date
+        AND EXISTS (
+                SELECT 1
                 FROM Products p_s
                 WHERE p_s.change_date <= '2019-08-16'
+                 AND p2.product_id = p_s.product_id
                 GROUP BY p_s.product_id
+                HAVING MAX(p_s.change_date) = p2.change_date
                 )
 )
 SELECT p.product_id , 
