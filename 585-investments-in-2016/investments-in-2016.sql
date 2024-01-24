@@ -1,12 +1,12 @@
 # Write your MySQL query statement below
-Select round(sum(tiv_2016), 2) As tiv_2016 From Insurance 
-Where tiv_2015 In(
-    Select tiv_2015 From Insurance
-    Group By tiv_2015
-    Having Count(*)>1
-)
-And (lat, lon) In(
-    Select lat, lon From Insurance
-    Group By lat, lon
-    Having Count(*) = 1
+SELECT ROUND(SUM(i.tiv_2016),2) tiv_2016
+FROM Insurance i
+WHERE EXISTS (
+    SELECT i2.pid
+    FROM Insurance i2
+    WHERE i2.pid != i.pid AND i2.tiv_2015 =i.tiv_2015
+) AND NOT EXISTS(
+    SELECT i3.pid
+    FROM Insurance i3
+    WHERE i3.pid != i.pid AND (i3.lat = i.lat AND i3.lon = i.lon)
 )
