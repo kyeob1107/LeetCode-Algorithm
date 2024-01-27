@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-SELECT *
+SELECT u.user_id, u.name, u.mail
 FROM Users u
 WHERE u.mail LIKE '%@leetcode.com'
     AND 
